@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Nkuetche Mermoz Brad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blanc:      #ffffff;
+      --bleu-clair: #e8f4fd;
+      --bleu-ciel:  #87ceeb;
+      --bleu-moyen: #4a9eca;
+      --bleu-fonce: #1a6a9a;
+      --texte:      #1e2a35;
+      --gris:       #6b7c8d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--blanc);
+      color: var(--texte);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      background-color: var(--blanc);
+      border-bottom: 2px solid var(--bleu-ciel);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 48px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--bleu-fonce);
+      cursor: default;
+    }
+
+    .nav-liens {
+      list-style: none;
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-liens button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--texte);
+      padding: 8px 20px;
+      border-radius: 20px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-liens button:hover {
+      background-color: var(--bleu-clair);
+      color: var(--bleu-moyen);
+    }
+
+    .nav-liens button.actif {
+      background-color: var(--bleu-moyen);
+      color: var(--blanc);
+    }
+
+    /* ── Pages (sections) ── */
+    .page { display: none; flex: 1; }
+    .page.visible { display: block; }
+
+    /* ── Page À propos ── */
+    #page-apropos {
+      padding: 80px 48px;
+      background: linear-gradient(160deg, var(--blanc) 60%, var(--bleu-clair) 100%);
+      min-height: calc(100vh - 70px);
+    }
+
+    .apropos-hero {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .avatar {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bleu-ciel), var(--bleu-moyen));
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--blanc);
+      box-shadow: 0 16px 48px rgba(74,158,202,0.3);
+    }
+
+    .apropos-intro h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .apropos-intro h1 span { color: var(--bleu-moyen); }
+    .apropos-intro .tag {
+      display: inline-block;
+      background-color: var(--bleu-ciel);
+      color: var(--bleu-fonce);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .apropos-intro p { color: var(--gris); max-width: 480px; }
+
+    .bio-grille {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .section-titre {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--texte);
+      margin-bottom: 6px;
+    }
+    .ligne {
+      width: 40px; height: 3px;
+      background: var(--bleu-ciel);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .info-liste { list-style: none; }
+    .info-liste li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bleu-clair);
+      color: var(--gris);
+      font-size: 0.95rem;
+    }
+    .info-liste li strong { color: var(--texte); margin-right: 8px; }
+
+    .bio-texte p { color: var(--gris); margin-bottom: 14px; font-size: 0.97rem; }
+
+    /* ── Page Projets ── */
+    #page-projets {
+      padding: 80px 48px;
+      background-color: var(--bleu-clair);
+      min-height: calc(100vh - 70px);
+    }
+
+    .projets-grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .carte {
+      background-color: var(--blanc);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(74,158,202,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .carte:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(74,158,202,0.2); }
+
+    .carte-image {
+      height: 140px;
+      background: linear-gradient(135deg, var(--bleu-ciel), var(--bleu-moyen));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .carte-corps { padding: 20px; }
+    .carte-titre { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; color: var(--texte); }
+    .carte-desc { font-size: 0.88rem; color: var(--gris); margin-bottom: 14px; line-height: 1.6; }
+    .carte-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .carte-tag {
+      background-color: var(--bleu-clair);
+      color: var(--bleu-fonce);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Compétences dans Projets */
+    .competences-bloc {
+      margin-top: 48px;
+    }
+    .competences { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .badge {
+      background-color: var(--blanc);
+      color: var(--bleu-fonce);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: 1.5px solid var(--bleu-ciel);
+    }
+
+    /* ── Page Contact ── */
+    #page-contact {
+      padding: 80px 48px;
+      background-color: var(--blanc);
+      min-height: calc(100vh - 70px);
+    }
+
+    .contact-grille {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .contact-info p { color: var(--gris); margin-bottom: 24px; }
+
+    .lien-contact {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--bleu-clair);
+      text-decoration: none;
+      color: var(--texte);
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .lien-contact:hover { color: var(--bleu-moyen); }
+    .lien-icone {
+      width: 36px; height: 36px;
+      background-color: var(--bleu-clair);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    .formulaire { display: flex; flex-direction: column; gap: 16px; }
+    .champ { display: flex; flex-direction: column; gap: 6px; }
+    .champ label { font-size: 0.85rem; font-weight: 500; color: var(--texte); }
+    .champ input, .champ textarea {
+      padding: 12px 14px;
+      border: 1.5px solid var(--bleu-ciel);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--texte);
+      background-color: var(--blanc);
+      transition: border-color 0.2s;
+      outline: none;
+      resize: vertical;
+    }
+    .champ input:focus, .champ textarea:focus { border-color: var(--bleu-moyen); }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background-color: var(--bleu-moyen);
+      color: var(--blanc);
+      border: none;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.15s;
+      align-self: flex-start;
+    }
+    .btn:hover { background-color: var(--bleu-fonce); transform: translateY(-2px); }
+
+    /* ── Footer ── */
+    footer {
+      background-color: var(--bleu-fonce);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 20px 48px;
+      font-size: 0.85rem;
+    }
+    footer span { color: var(--bleu-ciel); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-logo { font-size: 1.1rem; }
+      .nav-liens button { padding: 7px 12px; font-size: 0.85rem; }
+      #page-apropos, #page-projets, #page-contact { padding: 40px 24px; }
+      .apropos-hero { flex-direction: column; gap: 28px; }
+      .bio-grille, .contact-grille { grid-template-columns: 1fr; gap: 28px; }
+      .avatar { width: 150px; height: 150px; font-size: 3rem; }
+      .apropos-intro h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">Nkuetche Brad</div>
+    <ul class="nav-liens">
+      <li><button onclick="afficherPage('apropos')" id="btn-apropos" class="actif">À propos</button></li>
+      <li><button onclick="afficherPage('projets')" id="btn-projets">Projets</button></li>
+      <li><button onclick="afficherPage('contact')" id="btn-contact">Contact</button></li>
+    </ul>
+  </nav>
+
+  <!-- Page À propos -->
+  <div class="page visible" id="page-apropos">
+    <div class="apropos-hero">
+      <div class="avatar">👤</div>
+      <div class="apropos-intro">
+        <span class="tag">Étudiant en Informatique</span>
+        <h1>Bonjour, je suis<br /><span>Nkuetche Mermoz Brad</span></h1>
+        <p>Passionné par l'informatique et le développement, j'apprends chaque jour à construire des solutions simples et efficaces.</p>
+      </div>
+    </div>
+
+    <div class="bio-grille">
+      <div class="bio-texte">
+        <h2 class="section-titre">Ma biographie</h2>
+        <div class="ligne"></div>
+        <p>Je suis étudiant en informatique générale, actuellement en formation. Je m'intéresse au développement web, à la logique de programmation et à la résolution de problèmes concrets.</p>
+        <p>Mon objectif est de progresser pas à pas, en construisant des projets réels qui me permettent d'appliquer ce que j'apprends.</p>
+        <p>Je suis motivé, curieux et toujours prêt à relever de nouveaux défis dans le domaine de l'informatique.</p>
+      </div>
+      <div>
+        <h2 class="section-titre">Mes informations</h2>
+        <div class="ligne"></div>
+        <ul class="info-liste">
+          <li><strong>Nom :</strong> Nkuetche Mermoz Brad</li>
+          <li><strong>Formation :</strong> Informatique générale</li>
+          <li><strong>Niveau :</strong> Débutant</li>
+          <li><strong>Localisation :</strong> Ville, Pays</li>
+          <li><strong>Disponibilité :</strong> Stage / Projets</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Projets -->
+  <div class="page" id="page-projets">
+    <h2 class="section-titre">Mes Projets</h2>
+    <div class="ligne"></div>
+    <div class="projets-grille">
+      <div class="carte">
+        <div class="carte-image">🌐</div>
+        <div class="carte-corps">
+          <p class="carte-titre">Portfolio Personnel</p>
+          <p class="carte-desc">Ce portfolio réalisé en HTML et CSS purs, hébergé sur GitHub Pages.</p>
+          <div class="carte-tags">
+            <span class="carte-tag">HTML</span>
+            <span class="carte-tag">CSS</span>
+          </div>
+        </div>
+      </div>
+      <div class="carte">
+        <div class="carte-image">🧮</div>
+        <div class="carte-corps">
+          <p class="carte-titre">Calculatrice Web</p>
+          <p class="carte-desc">Une calculatrice simple réalisée avec HTML, CSS et JavaScript.</p>
+          <div class="carte-tags">
+            <span class="carte-tag">HTML</span>
+            <span class="carte-tag">CSS</span>
+            <span class="carte-tag">JavaScript</span>
+          </div>
+        </div>
+      </div>
+      <div class="carte">
+        <div class="carte-image">📋</div>
+        <div class="carte-corps">
+          <p class="carte-titre">Projet à venir</p>
+          <p class="carte-desc">Décris ici ton prochain projet dès que tu l'as réalisé.</p>
+          <div class="carte-tags">
+            <span class="carte-tag">En cours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="competences-bloc">
+      <h2 class="section-titre">Mes Compétences</h2>
+      <div class="ligne"></div>
+      <div class="competences">
+        <span class="badge">HTML</span>
+        <span class="badge">CSS</span>
+        <span class="badge">JavaScript</span>
+        <span class="badge">Python</span>
+        <span class="badge">Git</span>
+        <span class="badge">GitHub</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Contact -->
+  <div class="page" id="page-contact">
+    <h2 class="section-titre">Contact</h2>
+    <div class="ligne"></div>
+    <div class="contact-grille">
+      <div class="contact-info">
+        <p>Tu as une question, une proposition de projet ou tu veux juste dire bonjour ? N'hésite pas à me contacter.</p>
+        <a href="mailto:ton.email@example.com" class="lien-contact">
+          <div class="lien-icone">✉️</div>
+          ton.email@example.com
+        </a>
+        <a href="https://github.com/tonpseudo" target="_blank" class="lien-contact">
+          <div class="lien-icone">🐙</div>
+          github.com/tonpseudo
+        </a>
+        <a href="https://linkedin.com/in/tonprofil" target="_blank" class="lien-contact">
+          <div class="lien-icone">💼</div>
+          linkedin.com/in/tonprofil
+        </a>
+      </div>
+      <form class="formulaire" onsubmit="return false;">
+        <div class="champ">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" placeholder="Votre nom" />
+        </div>
+        <div class="champ">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="votre@email.com" />
+        </div>
+        <div class="champ">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Votre message..."></textarea>
+        </div>
+        <button type="submit" class="btn">Envoyer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 <span>Nkuetche Mermoz Brad</span> — Fait avec ❤️ en HTML &amp; CSS</p>
+  </footer>
+
+  <script>
+    function afficherPage(nom) {
+      // Cacher toutes les pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+      // Désactiver tous les boutons
+      document.querySelectorAll('.nav-liens button').forEach(b => b.classList.remove('actif'));
+      // Afficher la page choisie
+      document.getElementById('page-' + nom).classList.add('visible');
+      // Activer le bouton correspondant
+      document.getElementById('btn-' + nom).classList.add('actif');
+      // Remonter en haut
+      window.scrollTo(0, 0);
+    }
+  </script>
+
+</body>
+</html>
